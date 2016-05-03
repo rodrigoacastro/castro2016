@@ -89,6 +89,7 @@ TEXTO = TEXTO[TEXTO!=""]
 
 ##### USAR LIMPEZA DO TM POR SEGURANCA
 
+# importando e carregando pacote tm
 if (!require("tm")) {
 	install.packages("tm")
 	require("tm")
@@ -201,6 +202,7 @@ texto = str_replace_all(texto,"[[:digit:]]","")
 
 ##### USAR LIMPEZA DO TM POR SEGURANCA
 
+# importando e carregando pacote tm
 if (!require("tm")) {
 	install.packages("tm")
 	require("tm")
@@ -993,6 +995,7 @@ coloc_dir = concord[,7:11]
 
 ##### USAR LIMPEZA DO TM nos colocados
 
+# importando e carregando pacote tm
 if (!require("tm")) {
 	install.packages("tm")
 	require("tm")
