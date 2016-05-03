@@ -628,7 +628,11 @@ lista_proc_comum_TRAD = intersect(concord_que_TRAD[[2]][,"A5"],
 lista_proc_comum_TRAD
 
 # exportando dados
+
+#importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+
+# exportando dados
 #write.xlsx(lista_proc_comum_PESQ,"lista_proc_comum_PESQ.xlsx")
 
 
@@ -647,7 +651,11 @@ lista_proc_comum_PESQ = intersect(concord_que_PESQ[[2]][,"A5"],
 lista_proc_comum_PESQ
 
 # exportando dados
+
+#importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+	
+# exportando dados
 #write.xlsx(lista_proc_comum_PESQ,"lista_proc_comum_PESQ.xlsx")
 
 #############
@@ -705,7 +713,10 @@ linhas_processos_com_PESQ
 
 # Exportar linhas pro excel
 
-#require(xlsx)
+#importando e carregando pacote xlsx
+#if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+	
+# exportando dados
 #write.xlsx(linhas_processos_com_PESQ,"linhas_processos_com_PESQ.xlsx",row.names=T)
 
 # IGNORAR LINHA DO CONHECE (nao relevante porque nao e projecao)
@@ -812,6 +823,10 @@ amostras_processos_PESQ
 
 # exportando planilha com amostras
 
+#importando e carregando pacote xlsx
+#if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+	
+# exportando dados
 #write.xlsx(amostras_processos_PESQ,"amostras_processos_PESQ_novo.xlsx",row.names=T)
 #write.xlsx(amostras_processos_PESQ,"amostras_processos_PESQ_novo2.xlsx",row.names=F)
 
@@ -848,7 +863,11 @@ linhas_processos_com_TRAD
 
 # Exportar linhas pro excel
 
-#require(xlsx)
+#importando e carregando pacote xlsx
+#if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+	
+# exportando dados
+
 #write.xlsx(linhas_processos_com_TRAD,"linhas_processos_com_TRAD.xlsx",row.names=T)
 
 
@@ -909,7 +928,11 @@ amostras_processos_TRAD	= amostras_processos_TRAD[-ind_elim_TRAD,]
 amostras_processos_TRAD
 
 # exportando planilha com amostras
+
+#importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
+	
+# exportando dados
 #write.xlsx(amostras_processos_TRAD,"amostras_processos_TRAD_novo.xlsx",row.names=F)
 #write.xlsx(amostras_processos_TRAD,"amostras_processos_TRAD_novo2.xlsx",row.names=T)
 
