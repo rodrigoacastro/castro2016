@@ -63,7 +63,7 @@ lapply(planR,class)
 
 # convertendo colunas de "main attributes of good scientific text (43 a 47)
 #  em fatores, pois representam ranks,
-# ou seja, categorias em vez de dados numéricos
+# ou seja, categorias em vez de dados numÃ©ricos
 	
 planR[,43:47] = lapply(planR[,43:47],as.factor)
 
@@ -225,7 +225,7 @@ planT[,9]
 
 
 # convertendo colunas 25 a 30 em fatores, pois representam ranks,
-# ou seja, categorias em vez de dados numéricos
+# ou seja, categorias em vez de dados numÃ©ricos
 	
 planT[,25:30] = lapply(planT[,25:30],as.factor)
 
@@ -327,13 +327,17 @@ str(matrizRT)
 
 matrizRT
 
+# Salvando dados em planilhas
+
+#write.csv2(matrizRT,"matrizRT.csv",row.names=F)
+
 # Fazendo Dendogramas
 
 # 2 grupos
 dendograma(matrizRT,TITULO="Agrupamento dos pesquisadores e tradutores em dois grupos",N_GRUPOS=2)
 
 # 3 grupos
-dendograma(matrizRT,TITULO="Agrupamento dos pesquisadores e tradutores em três grupos",N_GRUPOS=3)
+dendograma(matrizRT,TITULO="Agrupamento dos pesquisadores e tradutores em trÃªs grupos",N_GRUPOS=3)
 
 # 4 grupos
 dendograma(matrizRT,TITULO="Agrupamento dos pesquisadores e tradutores em quatro grupos",N_GRUPOS=4)
