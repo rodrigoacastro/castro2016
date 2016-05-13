@@ -239,12 +239,42 @@ freq_list = freq_list[condition == TRUE]
 # ordena a lista em ordem decrescente
 sorted_freq_list = sort(freq_list,decreasing=T) 
 
-# transforma em dataframe
-sorted_freq_list = data.frame(sorted_freq_list)
+################################################
 
-# organiza dados no dataframe
-sorted_freq_list = data.frame(Termo = row.names(sorted_freq_list),Frequencia = sorted_freq_list,
-							row.names=NULL,	stringsAsFactors=FALSE)
+# Transformando lista_freq de array (arranjo) gerado pela funcao "table" para dataframe
+# e organizando dados 
+
+# Alteracao feita devido a uma mudanca na funcao data.frame ao lidar com arrays (arranjos)
+# da versao 3.2.5 para a versao 3.3.0
+
+# obtendo versao atual do R
+curr_R_vers = package_version(R.version)
+
+# Conferindo versao e executando comandos para a versao atual (seja igual ou anterior a 3.3.0)
+
+# se o 1o caractere da versao do R (no caso "3" se a versao for 3.2.5) for menor que 3
+if (substr(curr_R_vers,1,1) < 3 |  # OU
+	# se o 1o caractere da versao do R (no caso "2", se a versao for 3.2.5) for igual a 3 E o 2o for menor que 3
+	(substr(curr_R_vers,1,1) == 3 & (substr(curr_R_vers,3,3) < 3))
+	) {
+
+	# transforma em dataframe
+	sorted_freq_list = data.frame(sorted_freq_list)
+
+	# organiza dados no dataframe
+	sorted_freq_list = data.frame(Termo = row.names(sorted_freq_list),
+						Frequencia = sorted_freq_list,row.names=NULL, stringsAsFactors=FALSE)
+
+	
+
+} else { # se a versao do R for maior ou igual a 3.3.0
+
+	# transforma em dataframe
+	sorted_freq_list = data.frame(sorted_freq_list,row.names = NULL)
+
+}
+
+################################################
 
 # define nomes das colunas pro resultado
 colnames(sorted_freq_list) = c("Termo","Frequencia")
