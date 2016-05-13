@@ -252,7 +252,7 @@ curr_R_vers = package_version(R.version)
 
 # Conferindo versao e executando comandos para a versao atual (seja igual ou anterior a 3.3.0)
 
-# se o 1o caractere da versao do R (no caso "3" se a versao for 3.2.5) for menor que 3
+# se o 1o caractere da versao do R (no caso "3", se a versao for 3.2.5) for menor que 3
 if (substr(curr_R_vers,1,1) < 3 |  # OU
 	# se o 1o caractere da versao do R (no caso "2", se a versao for 3.2.5) for igual a 3 E o 2o for menor que 3
 	(substr(curr_R_vers,1,1) == 3 & (substr(curr_R_vers,3,3) < 3))
@@ -265,13 +265,10 @@ if (substr(curr_R_vers,1,1) < 3 |  # OU
 	sorted_freq_list = data.frame(Termo = row.names(sorted_freq_list),
 						Frequencia = sorted_freq_list,row.names=NULL, stringsAsFactors=FALSE)
 
-	
+} else { # se a versao atual do R for maior ou igual a 3.3.0
 
-} else { # se a versao do R for maior ou igual a 3.3.0
-
-	# transforma em dataframe
+	# transforma em dataframe sem os nomes das linhas (que seriam iguais aos dados da 1a coluna)
 	sorted_freq_list = data.frame(sorted_freq_list,row.names = NULL)
-
 }
 
 ################################################
