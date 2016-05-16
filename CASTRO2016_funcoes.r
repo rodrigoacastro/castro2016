@@ -8,6 +8,10 @@
 # SUMARIO #
 ###########
 
+## LEITURA DE ARQUIVOS TXT EM PASTA
+
+# le_txt_pasta
+
 ## LIMPEZA DO TEXTO
 
 # limpeza
@@ -15,6 +19,18 @@
 ## REMOVER MARCADORES (ENTRE < E >)
 
 # removeMarcador
+
+## TORNAR UM TERMO COMPOSTO EM UM TEXTO
+
+# prepara_palavra_composta
+
+## GERAR INDICES COM BASE EM UMA LISTA DE VERBOS
+
+# gera_indices
+
+## GERAR TEXTO_NUVEM a partir de uma LISTA DE FREQUENCIA
+
+#lista_freq_para_texto_nuvem
 
 ## LISTA DE FREQUENCIA
 
@@ -38,6 +54,64 @@
 
 ###########################################################
 
+# LEITURA DE ARQUIVOS TXT EM PASTA
+
+# FUNCAO PARA LER TXT EM PASTAS COM CODIFICACAO (TXT OU UTF-8, POR EXEMPLO)
+
+
+le_txt_pasta = function (CODIFICACAO = c("ANSI","UTF-8")) {
+
+# escolhendo a pasta com os textos de analise 
+# e obtendo o endereco do diretorio
+direct = choose.dir(getwd(), caption=toupper("Escolha o diretorio onde estao os textos"))
+
+# definindo extensao do arquivo
+EXTENSAO = ".txt"
+
+# acerca a expressao regular com o * (que significa qualquer sequencia de caracteres) para a EXTENSAO do arquivo_saida 
+EXTENSAO = paste("*",EXTENSAO,sep= "")
+
+# lista os arquivos (no formato ".txt") do diretorio
+lista_arquivos_dir = list.files(direct, pattern=EXTENSAO, full.names=TRUE)
+
+# cria funcao para ler arquivos .txt em, default, na codificacao ANSI
+# CODIFICACAO pega o primeiro valor da lista de valores
+func_leitura = function (files) readLines(files,warn=F,skipNul=F,encoding= CODIFICACAO[1])
+
+# define arquivo de saida
+NOME_ARQUIVO = "arquivo_saida"
+
+# lendo os arquivos com a funcao criada
+# criando um objeto com o nome dado anteriormente,
+# com o conteudo dos arquivos em uma lista
+
+assign (NOME_ARQUIVO,
+
+		lapply(lista_arquivos_dir, func_leitura)
+)
+
+###
+# gerando resultado
+
+# vetor em branco para preencher
+Resultado = list()
+
+# gera dados de saida
+Resultado = arquivo_saida
+
+# gera indice dos resultados (nomes dos arquivos do diretorio na ordem)
+indices_result = gsub(".txt","",dir(direct))
+
+names(Resultado) = indices_result
+
+###
+
+# retorna resultado
+return(Resultado)
+
+}
+
+#######	FIM DA FUNCAO
 
 ###########################################################
 
@@ -149,6 +223,79 @@ return(TEXTO)
 
 ##########################################################################
 
+### Funcao para tornar um termo composto em um texto 
+
+prepara_palavra_composta = function (TEXTO,TERMO) {
+
+# expressao regular que busca palavra seguida de espaco, 
+# esta seguida de e/ou outras palavras
+regexSource = "[A-Za-z]+ [A-Za-z]+( [A-Za-z]+)?"
+
+# se a condicao for verdadeira, executa
+if( grepl(regexSource ,TERMO) ) {
+	temp = TERMO # armazena TERMO com espacos para posterior substituicao
+	TERMO = gsub(" ","-",TERMO) # troca espaco por hifen no TERMO
+	TEXTO = gsub(temp,TERMO,TEXTO) # troca espaco por hifen do TERMO no TEXTO
+	rm(temp) # deleta objeto que nao e mais necessario
+}
+
+return (TEXTO)
+
+}
+
+##########################################################################
+
+# Funcao para gerar indices com base em uma lista de verbos
+
+gera_indices = function(lista_verbos,planilha) {
+
+	# gerando lista vazia
+	ind_fundidos = c()
+
+	# loop para gerar indices de cada palavra em uma busca
+
+	for (verbo in lista_verbos) {
+
+		#define nome de variavel a usar em cada ciclo do loop
+		nome_var = paste("ind",verbo,sep="_")
+
+		#define palavra de busca a usar em cada ciclo do loop
+		pal_busca = paste(verbo,"$",sep="")
+
+		# fundindo indices da linha num so objeto para eliminar
+		ind_fundidos = append(ind_fundidos,
+					#gerando variaveis com o nome pre-definido
+					assign(nome_var,
+					grep(pal_busca,planilha)
+					))
+
+	}
+
+return (ind_fundidos)
+
+} # fim da funcao gera_indices
+
+##########################################################################
+
+# FUNCAO QUE GERA TEXTO_NUVEM a partir de uma LISTA DE FREQUENCIA
+
+lista_freq_para_texto_nuvem = function (LISTA_FREQ) {
+
+texto_nuvem = character()
+
+for (linha in 1:nrow(LISTA_FREQ)) {
+	texto_nuvem = (
+		append (texto_nuvem,rep(as.character(LISTA_FREQ[linha,1]),LISTA_FREQ[linha,2]))
+			)
+}
+
+return(texto_nuvem)
+
+}
+
+
+##########################################################################
+
 ####################################################################
 #
 # SCRIPT PARA FAZER LISTA DE FREQUENCIA
@@ -248,14 +395,27 @@ sorted_freq_list = sort(freq_list,decreasing=T)
 # da versao 3.2.5 para a versao 3.3.0
 
 # obtendo versao atual do R
+
+# versao atual
 curr_R_vers = package_version(R.version)
 
-# Conferindo versao e executando comandos para a versao atual (seja igual ou anterior a 3.3.0)
+#####
 
-# se o 1o caractere da versao do R (no caso "3", se a versao for 3.2.5) for menor que 3
-if (substr(curr_R_vers,1,1) < 3 |  # OU
-	# se o 1o caractere da versao do R (no caso "2", se a versao for 3.2.5) for igual a 3 E o 2o for menor que 3
-	(substr(curr_R_vers,1,1) == 3 & (substr(curr_R_vers,3,3) < 3))
+# versao chave (key), a partir da qual houve uma modificacao importante
+key_R_vers = "3.3.0"
+
+# Nao e necessario rodar essa linha porque a comparacao transforma o numero da versao em string
+#key_R_vers = as.numeric_version(key_R_vers)
+
+#####
+
+# Conferindo versao e executando comandos para a versao atual (seja igual ou anterior a 3.3.0)
+                                                                       
+# se o 1o caractere da versao do R (de valor "3", se a versao for 3.2.5) for menor o 1o caractere da versao "chave" do R
+if (substr(curr_R_vers,1,1) < substr(key_R_vers,1,1) |  # OU
+	# se o 1o caractere da versao do R (de valor "3", se a versao for 3.2.5) for igual ao 1o caractere da versao "chave"
+	# (de valor "2", se a versao for 3.2.5) E o 3o (de valor "2", se a versao for 3.2.5) for menor que o 3o da versao "chave" # (no caso, "3")
+	(substr(curr_R_vers,1,1) == substr(key_R_vers,1,1) & (substr(curr_R_vers,3,3) < (substr(key_R_vers,3,3))))
 	) {
 
 	# transforma em dataframe
