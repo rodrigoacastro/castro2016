@@ -22,7 +22,7 @@ rm(list=ls())
 
 # Lendo as funcoes necessarias dentro do script
 
-source("CASTRO_2016_funcoes.R")   
+source("CASTRO2016_funcoes.R")   
 
 # Conferindo objetos na memoria para verificar se funcoes foram carregadas
 ls() 
