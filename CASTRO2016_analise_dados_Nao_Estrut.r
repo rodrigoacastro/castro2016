@@ -34,13 +34,11 @@ source("CASTRO_2016_funcoes.R")
 
 
 # LENDO textos na pasta (diretorio) onde eles estao
-# pasta "Transcricoes_protocolos_TRAD_partic_apenas
+# usando a funcao le_txt_pasta
+# a partir da pasta "Transcricoes_protocolos_TRAD_partic_apenas
 
-direct = choose.dir(getwd(), # escolhendo a pasta com os textos de analise
-                   caption=toupper("Escolha o diretorio onde estao os textos"))      
-files_sem_perg = list.files(direct, pattern="*.txt", full.names=TRUE) # lista os arquivos .txt do diretorio
-read.txt = function (files) readLines(files,warn=F,skipNul=F,encoding="UTF-8") # cria funcao para ler arquivos .txt em UTF-8
-dados_TRAD_sem_perg = lapply(files_sem_perg, read.txt) # lendo os arquivos
+dados_TRAD_sem_perg = le_txt_pasta (CODIFICACAO = "UTF-8")
+
 
 # conferindo objeto
 str(dados_TRAD_sem_perg)
@@ -50,13 +48,10 @@ str(dados_TRAD_sem_perg)
 
 
 # LENDO textos na pasta (diretorio) onde eles estao
-# pasta "Transcricoes_protocolos_PESQ_partic_apenas
+# usando a funcao le_txt_pasta
+# a partir da pasta "Transcricoes_protocolos_PESQ_partic_apenas
 
-direct = choose.dir(getwd(), # escolhendo a pasta com os textos de analise
-                   caption=toupper("Escolha o diretorio onde estao os textos"))      
-files_sem_perg = list.files(direct, pattern="*.txt", full.names=TRUE) # lista os arquivos .txt do diretorio
-read.txt = function (files) readLines(files,warn=F,skipNul=F,encoding="UTF-8") # cria funcao para ler arquivos .txt em UTF-8
-dados_PESQ_sem_perg = lapply(files_sem_perg, read.txt) # lendo os arquivos
+dados_PESQ_sem_perg = le_txt_pasta (CODIFICACAO = "UTF-8")
 
 # conferindo objeto
 str(dados_PESQ_sem_perg)
@@ -64,9 +59,13 @@ str(dados_PESQ_sem_perg)
 
 ##### REMOVENDO ITENS entre parenteses angulares (< e >)
           
-# carregando o pacote stringr          
-if (!require ("stringr")) { install.packages("stringr"); require ("stringr")} else { require("stringr")}
-
+# importando e carregando o pacote stringr          
+if (!require ("stringr")) {
+	install.packages("stringr")
+	require ("stringr")
+} else { 
+	require("stringr")
+}
 
 
 # TRADUTORES
@@ -115,29 +114,6 @@ str(unlist(dados_PESQ))
 
 ### PREPARANDO o texto PARA BUSCAR "a gente"
 
-
-### funcao para tornar um termo composto em um texto 
-
-prepara_palavra_composta = function (TEXTO,TERMO) {
-
-# expressao regular que busca palavra seguida de espaco, 
-# esta seguida de e/ou outras palavras
-regexSource = "[A-Za-z]+ [A-Za-z]+( [A-Za-z]+)?"
-
-# se a condicao for verdadeira, executa
-if( grepl(regexSource ,TERMO) ) {
-	temp = TERMO # armazena TERMO com espacos para posterior substituicao
-	TERMO = gsub(" ","-",TERMO) # troca espaco por hifen no TERMO
-	TEXTO = gsub(temp,TERMO,TEXTO) # troca espaco por hifen do TERMO no TEXTO
-	rm(temp) # deleta objeto que nao e mais necessario
-}
-
-return (TEXTO)
-
-}
-
-###
-
 # TRADUTORES
 
 
@@ -183,9 +159,14 @@ dados_PESQ = scan("dados_PESQ_partic.txt",what="char",quote="",comment.char="")
 ######
 
 #########	Aplicando Funcao de Limpeza - PARTE DEMORADA SE O TEXTO FOR GRANDE
-
-# carregando o pacote stringr
-if (!require ("stringr")) { install.packages("stringr"); require ("stringr")} else { require("stringr")}
+     
+# importando e carregando o pacote stringr          
+if (!require ("stringr")) {
+	install.packages("stringr")
+	require ("stringr")
+} else { 
+	require("stringr")
+}
 
 # TRADUTORES
 
@@ -256,7 +237,7 @@ lista_FREQ_TRAD = lista_frequencia(dados_TRAD, ALFAB = FALSE)
 lista_FREQ_TRAD
 
 # exportando lista_freq
-#write.csv2(lista_FREQ_TRAD,file= "lista_freq_TRAD.csv",row.names=F)
+write.csv2(lista_FREQ_TRAD,file= "lista_freq_TRAD.csv",row.names=F)
 
 
 type1 = nrow(lista_FREQ_TRAD)   # numero de palavras diferentes
@@ -275,7 +256,7 @@ lista_FREQ_PESQ = lista_frequencia(dados_PESQ, ALFAB = FALSE)
 lista_FREQ_PESQ
 
 # exportando lista_freq
-#write.csv2(lista_FREQ_PESQ,file= "lista_freq_PESQ.csv",row.names=F)
+write.csv2(lista_FREQ_PESQ,file= "lista_freq_PESQ.csv",row.names=F)
 
 
 type2 = nrow(lista_FREQ_PESQ)   # numero de palavras diferentes
@@ -301,7 +282,7 @@ TypeTokenRatio2
 lista_FREQ_TRAD_NP = nuvem_palavras(dados_TRAD, ALFAB = FALSE,
 				                     STOPWORDS_default = TRUE)
 # exportando lista_FREQ_TRAD_NP
-#write.csv2(lista_FREQ_TRAD_NP,file= "lista_freq_TRAD_stopwords_padrao.csv",row.names=F)
+write.csv2(lista_FREQ_TRAD_NP,file= "lista_freq_TRAD_stopwords_padrao.csv",row.names=F)
 
 # lista de frequencia com stopwords personalizadas
 									 
@@ -310,7 +291,7 @@ lista_FREQ_TRAD_NP_Pers = nuvem_palavras(dados_TRAD, ALFAB = FALSE,
 
 
 # exportando lista_FREQ_TRAD_NP_Pers
-#write.csv2(lista_FREQ_TRAD_NP_Pers,file= "lista_freq_TRAD_stopwords_personal.csv",row.names=F)
+write.csv2(lista_FREQ_TRAD_NP_Pers,file= "lista_freq_TRAD_stopwords_personal.csv",row.names=F)
 
 
 
@@ -322,7 +303,7 @@ lista_FREQ_TRAD_NP_Pers = nuvem_palavras(dados_TRAD, ALFAB = FALSE,
 lista_FREQ_PESQ_NP = nuvem_palavras(dados_PESQ, ALFAB = FALSE,
 				                     STOPWORDS_default = TRUE)
 # exportando lista_FREQ_PESQ_NP
-#write.csv2(lista_FREQ_PESQ_NP,file= "lista_freq_PESQ_stopwords_padrao.csv",row.names=F)
+write.csv2(lista_FREQ_PESQ_NP,file= "lista_freq_PESQ_stopwords_padrao.csv",row.names=F)
 
 # lista de frequencia com stopwords personalizadas
 									 
@@ -330,7 +311,7 @@ lista_FREQ_PESQ_NP_Pers = nuvem_palavras(dados_PESQ, ALFAB = FALSE,
 				                      STOPWORDS_default = F)
 
 # exportando lista_FREQ_PESQ_NP_Pers
-#write.csv2(lista_FREQ_PESQ_NP_Pers,file= "lista_freq_PESQ_stopwords_personal.csv",row.names=F)
+write.csv2(lista_FREQ_PESQ_NP_Pers,file= "lista_freq_PESQ_stopwords_personal.csv",row.names=F)
 
 
 # PREPARACAO PARA NUVEM DE PALAVRAS TOP 20 E TOP 20 MAIS RELEVANTES
@@ -399,24 +380,6 @@ str(lista_FREQ_PESQ_top20_rel)
 
 ##########################
 
-# FUNCAO QUE GERA TEXTO_NUVEM a partir de uma LISTA DE FREQUENCIA
-
-lista_freq_para_texto_nuvem = function (LISTA_FREQ) {
-
-texto_nuvem = character()
-
-for (linha in 1:nrow(LISTA_FREQ)) {
-	texto_nuvem = (
-		append (texto_nuvem,rep(as.character(LISTA_FREQ[linha,1]),LISTA_FREQ[linha,2]))
-			)
-}
-
-return(texto_nuvem)
-
-}
-
-
-##########################
 
 # Usando funcao para fazer nuvem de palavras dos 20 termos mais relevantes
 
@@ -629,7 +592,8 @@ lista_proc_comum_TRAD
 
 # exportando dados
 
-#importando e carregando pacote xlsx
+#importando e carregando pacote stringr
+     
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
 
 # exportando dados
@@ -653,8 +617,9 @@ lista_proc_comum_PESQ
 # exportando dados
 
 #importando e carregando pacote xlsx
+
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
-	
+
 # exportando dados
 #write.xlsx(lista_proc_comum_PESQ,"lista_proc_comum_PESQ.xlsx")
 
@@ -772,39 +737,6 @@ amostras_processos_PESQ
 
 # edit(amostras_processos_PESQ)
 
-
-# Funcao para gerar indices com base em uma lista de verbos
-
-##########################################
-gera_indices = function(lista_verbos,planilha) {
-
-	# gerando lista vazia
-	ind_fundidos = c()
-
-	# loop para gerar indices de cada palavra em uma busca
-
-	for (verbo in lista_verbos) {
-
-		#define nome de variavel a usar em cada ciclo do loop
-		nome_var = paste("ind",verbo,sep="_")
-
-		#define palavra de busca a usar em cada ciclo do loop
-		pal_busca = paste(verbo,"$",sep="")
-
-		# fundindo indices da linha num so objeto para eliminar
-		ind_fundidos = append(ind_fundidos,
-					#gerando variaveis com o nome pre-definido
-					assign(nome_var,
-					grep(pal_busca,planilha)
-					))
-
-	}
-
-return (ind_fundidos)
-
-} # fim da funcao gera_indices
-##########################################
-
 # gerando lista de verbos pra eliminacao
 lista_verbos_PESQ = c("acha","conhece","saber","sabendo","vendo")
 
@@ -826,7 +758,7 @@ amostras_processos_PESQ
 #importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
 	
-# exportando dados
+# exportando amostras
 #write.xlsx(amostras_processos_PESQ,"amostras_processos_PESQ_novo.xlsx",row.names=T)
 #write.xlsx(amostras_processos_PESQ,"amostras_processos_PESQ_novo2.xlsx",row.names=F)
 
@@ -866,7 +798,7 @@ linhas_processos_com_TRAD
 #importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
 	
-# exportando dados
+# exportando linhas
 
 #write.xlsx(linhas_processos_com_TRAD,"linhas_processos_com_TRAD.xlsx",row.names=T)
 
@@ -932,7 +864,7 @@ amostras_processos_TRAD
 #importando e carregando pacote xlsx
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
 	
-# exportando dados
+# exportando amostras
 #write.xlsx(amostras_processos_TRAD,"amostras_processos_TRAD_novo.xlsx",row.names=F)
 #write.xlsx(amostras_processos_TRAD,"amostras_processos_TRAD_novo2.xlsx",row.names=T)
 
@@ -956,14 +888,13 @@ str(coloc_EU_TRAD)
 
 coloc_EU_TRAD
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "eu" a direita
 #write.csv2(coloc_EU_TRAD[[2]],file= "coloc_EU_TRAD_direita.csv",row.names=F)
 
 # exportando lista de colocados de "a gente" a esquerda
 #write.csv2(coloc_EU_TRAD[[3]],file= "coloc_EU_TRAD_esquerda.csv",row.names=F)
-
 
 
 # PESQUISADORES
@@ -977,7 +908,7 @@ str(coloc_EU_PESQ)
 
 coloc_EU_PESQ
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "eu" a direita
 #write.csv2(coloc_EU_PESQ[[2]],file= "coloc_EU_PESQ_direita.csv",row.names=F)
@@ -1001,7 +932,7 @@ str(coloc_A_GENTE_TRAD)
 
 coloc_A_GENTE_TRAD
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "a gente" a direita
 #write.csv2(coloc_A_GENTE_TRAD[[2]],file= "coloc_A_GENTE_TRAD_direita.csv",row.names=F)
@@ -1022,7 +953,7 @@ str(coloc_A_GENTE_PESQ)
 
 coloc_A_GENTE_PESQ
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "a gente" a direita
 #write.csv2(coloc_A_GENTE_PESQ[[2]],file= "coloc_A_GENTE_PESQ_direita.csv",row.names=F)
@@ -1046,7 +977,7 @@ str(coloc_QUE_TRAD)
 coloc_QUE_TRAD
 
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "a gente" a direita
 #write.csv2(coloc_QUE_TRAD[[2]],file= "coloc_QUE_TRAD_direita.csv",row.names=F)
@@ -1067,7 +998,7 @@ str(coloc_QUE_PESQ)
 coloc_QUE_PESQ
 
 
-# Exportando dados
+# Exportando colocados
 
 # exportando lista de colocados de "a gente" a direita
 #write.csv2(coloc_QUE_PESQ[[2]],file= "coloc_QUE_PESQ_direita.csv",row.names=F)
