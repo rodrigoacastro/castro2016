@@ -304,8 +304,8 @@ dendograma(matrizT, N_GRUPOS = 2, DISTANCIA = "euclidean",
 
 ###################
 # Fonte: https://stackoverflow.com/questions/16529327/compare-column-names-and-make-new-table/16529581#16529581
-c <- rbind(b[, which(colnames(b)%in% colnames(a))],
-    a[, which(colnames(a)%in% colnames(b))])
+#c <- rbind(b[, which(colnames(b)%in% colnames(a))],
+#    a[, which(colnames(a)%in% colnames(b))])
 ###################
 
 # Selecionando categorias comuns e fazendo um dataframe
