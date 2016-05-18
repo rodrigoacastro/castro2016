@@ -592,7 +592,7 @@ lista_proc_comum_TRAD
 
 # exportando dados
 
-#importando e carregando pacote stringr
+#importando e carregando pacote xlsx
      
 #if (!require ("xlsx")) { install.packages("xlsx"); require ("xlsx")} else { require("xlsx")}
 
