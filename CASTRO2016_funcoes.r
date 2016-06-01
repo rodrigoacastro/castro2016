@@ -375,7 +375,12 @@ words_vector = unlist(wordlist)
 # cria uma lista de frequencia 
 freq_list = table(words_vector) 
 
-# Vetor logico com 3 condicoes a serem cumpridas
+# Vetor logico com 3 condicoes a serem cumpridas para eliminar
+
+# condicoes:
+#1: os itens (os nomes das linhas) que sao itens vazios ("")
+#2: os itens (os nomes das linhas) que sao espacos (" ")
+#3: os itens (os nomes das linhas) que sao hifens ("-")
 
 condition = (row.names(freq_list) != "") & (row.names(freq_list) != " ") &
 				(row.names(freq_list) != "-")
@@ -386,6 +391,11 @@ freq_list = freq_list[condition == TRUE]
 # ordena a lista em ordem decrescente
 sorted_freq_list = sort(freq_list,decreasing=T) 
 
+# limpa caracteres nao alfanumericos dos itens da lista
+# que nao foram eliminados na limpeza anterior
+# utilizando uma expressao regular "[^[:alnum:]_]"
+
+sorted_freq_list[1]$Termo = gsub("[^[:alnum:]_]","",sorted_freq_list[1]$Termo)
 ################################################
 
 # Transformando lista_freq de array (arranjo) gerado pela funcao "table" para dataframe
