@@ -122,15 +122,18 @@ dados_TRAD = prepara_palavra_composta(dados_TRAD,"a gente")
 # mostrando ocorrencias    
 #dados_TRAD[grep("a-gente",dados_TRAD)]
 
-# DADOS PARA CONCORD
+######################
+# SEPARANDO DADOS PARA CONCORDANCIA
 dados_TRAD_concord = dados_TRAD
+######################
 
-#############	SALVANDO ARQUIVOS ATÉ O MOMENTO
-write.table(dados_TRAD,"dados_TRAD_partic.txt",sep="\t",row.names=FALSE,col.names=FALSE)
+## Segmentando texto para continuar a analise
 
-###	RE-IMPORTANDO ARQUIVOS NOVAMENTE JÁ DIVIDINDO EM STRINGS PARA OBTER ALGUNS RESULTADOS
+# Segmentando as palavras do texto por espaco e separando-as
+dados_TRAD = str_split(dados_TRAD,pattern=" ")
 
-dados_TRAD = scan("dados_TRAD_partic.txt",what="char",quote="",comment.char="")
+# Organizando as palavras em uma unica lista para continuar a analise
+dados_TRAD = unlist(dados_TRAD)
 
 
 # PESQUISADORES
@@ -145,16 +148,18 @@ dados_PESQ = prepara_palavra_composta(dados_PESQ,"a gente")
 dados_PESQ = unlist(dados_PESQ)
 str(dados_PESQ) 
 
+######################
 # DADOS PARA CONCORD
 dados_PESQ_concord = dados_PESQ
+######################
 
+## Segmentando texto para continuar a analise
 
-#############	SALVANDO ARQUIVOS ATE O MOMENTO
-write.table(dados_PESQ,"dados_PESQ_partic.txt",sep="\t",row.names=FALSE,col.names=FALSE)
+# Segmentando as palavras do texto por espaco e separando-as
+dados_PESQ = str_split(dados_PESQ,pattern=" ")
 
-###	RE-IMPORTANDO ARQUIVOS NOVAMENTE JA DIVIDINDO EM STRINGS PARA OBTER ALGUNS RESULTADOS
-
-dados_PESQ = scan("dados_PESQ_partic.txt",what="char",quote="",comment.char="")
+# Organizando as palavras em uma unica lista para continuar a analise
+dados_PESQ = unlist(dados_PESQ)
 
 ######
 
